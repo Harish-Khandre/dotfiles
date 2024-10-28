@@ -1,3 +1,5 @@
+export LANG=en_US.UTF-8
+
 # Base PATH setup
 export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -36,14 +38,11 @@ alias .="nvim ."
 alias fzfclip='tac | fzf --multi | tr "\n" " " | xclip -selection clipboard'
 alias ff='nvim $(find . -type f \( -path "*/node_modules/*" -prune \) -o -type f -print | fzf -m --preview="bat --color=always {}")'
 alias fd='cd "$(find . -type d \( -name node_modules -prune \) -o -type d -print | fzf --preview="ls -al {}")" && nvim .'
+alias cat='batcat'
 
 # Command substitutions
 if command -v eza &>/dev/null; then
   alias ls='eza --icons=always --color=always --long'
-fi
-
-if command -v bat &>/dev/null; then
-  alias cat='bat'
 fi
 
 # autocompletions
@@ -96,3 +95,4 @@ setopt hist_find_no_dups
 # Bindings and completion
 autoload -U compinit && compinit
 bindkey '^I' autosuggest-accept
+eval "$(atuin init zsh)"
