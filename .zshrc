@@ -42,7 +42,7 @@ alias cat='batcat'
 
 # Command substitutions
 if command -v eza &>/dev/null; then
-  alias ls='eza --icons=always --color=always --long'
+  alias ls='eza --icons=always --color=auto --long'
 fi
 
 # autocompletions

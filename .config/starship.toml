@@ -1,46 +1,100 @@
+# starship.toml
+
+# General Settings
+add_newline = true
+palette = "default"
+
 format = """
-$username\
-$hostname\
+[╭](fg:separator)\
+$status\
 $directory\
-$git_branch\
 $git_state\
+$git_branch\
 $git_status\
 $line_break\
-$python\
-$character"""
+[╰](fg:separator)\
+$character\
+"""
 
-[directory]
-style = "blue"
+###########################################
+# Palette Definition
+###########################################
+
+[palettes.default]
+prompt_ok    = "#d8714c"
+prompt_error = "#e23142"
+icon_color   = "#161516"
+separator    = "#35314c"
+bg_color     = "#35314c"
+
+folder_color = "#d8714c"
+duration_color = "#e28f31"
+status_color = "#e23142"
+
+###########################################
+# Prompt and Directory Configuration
+###########################################
 
 [character]
-success_symbol = "[❯](blue)"
-error_symbol = "[❯](red)"
-vimcmd_symbol = "[❮](green)"
+success_symbol = "[❯](fg:prompt_ok)"
+error_symbol   = "[❯](fg:prompt_error)"
 
-[git_branch]
-symbol = ""
-format = '[ $symbol $branch ]($style)'
-style = "green"
+[directory]
+format            = "[─](fg:separator)[](fg:folder_color)[pwd](fg:icon_color bg:folder_color)[](fg:folder_color bg:bg_color)[ $path](bg:bg_color)[](fg:bg_color)" 
+truncate_to_repo  = false
+truncation_length = 2
 
-[git_status]
-format = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
-style = "green"
-conflicted = "!"
-untracked = "✚"
-modified = "✎"
-staged = "✓"
-renamed = "»"
-deleted = "✖"
-stashed = "≡"
+###########################################
+# Status Section
+###########################################
 
-[git_state]
-format = '\([$state( $progress_current/$progress_total)]($style)\) '
-style = "green"
+[status]
+format               = "[─](fg:separator)[](fg:status_color)[](fg:icon_color bg:status_color)[](fg:status_color bg:bg_color)[ $status](bg:bg_color)[](fg:bg_color)"
+pipestatus           = true
+pipestatus_separator = "-"
+pipestatus_segment_format = "$status"
+pipestatus_format    = "[─](fg:separator)[](fg:status_color)[](fg:icon_color bg:status_color)[](fg:status_color bg:bg_color)[ $pipestatus](bg:bg_color)[](fg:bg_color)"
+disabled             = false
+
+###########################################
+# Command Duration
+###########################################
 
 [cmd_duration]
-format = "[$duration]($style) "
-style = "yellow"
+format   = "[─](fg:separator)[](fg:duration_color)[󱐋](fg:icon_color bg:duration_color)[](fg:duration_color bg:bg_color)[ $duration](bg:bg_color)[](fg:bg_color)"
+min_time = 1002
 
-[python]
-format = "[$virtualenv]($style) "
-style = "bright-black"
+[time]
+format   = "[](fg:duration_color)[󰥔](fg:icon_color bg:duration_color)[](fg:duration_color bg:bg_color)[ $time](bg:bg_color)[](fg:bg_color)"
+disabled = false
+
+###########################################
+# Git Configuration
+###########################################
+
+[git_branch]
+style   = "#d8714c"
+format  = "[─](fg:separator)[](fg:folder_color)[ $symbol](fg:icon_color bg:folder_color)[](fg:folder_color bg:bg_color)[ $branch](bg:bg_color)[](fg:bg_color)" 
+
+[git_commit]
+style   = "#d8714c"
+format  = "\b[ ](bg:$style)[\\($hash$tag\\)](fg:black bg:$style)[](fg:$style)"
+
+[git_state]
+style   = "#d8714c"
+format  = "[─](fg:separator)[](fg:folder_color)[ \\($state( $progress_current/$progress_total)\\)](fg:icon_color bg:folder_color)[](fg:folder_color bg:bg_color)(bg:bg_color)[](fg:bg_color)" 
+
+[git_status]
+style   = "#d8714c"
+format  = "[─](fg:separator)[](fg:folder_color)$conflicted$staged$modified$renamed$deleted$untracked$stashed$ahead_behind(fg:icon_color bg:folder_color)[](fg:folder_color)" 
+
+conflicted    = "[ ](bold fg:90 bg:#d8712c)[  ${count} ](fg:black bg:#d8712c)"
+staged        = "[ $count ](fg:black bg:#d8714c)"
+modified      = "[ ${count} ](fg:black bg:#d8714c)"
+renamed       = "[ ${count} ](fg:black bg:#d8714c)"
+deleted       = "[ ${count} ](fg:black bg:#d8714c)"
+untracked     = "[?${count} ](fg:black bg:#d8714c)"
+stashed       = "[ ${count} ](fg:black bg:#d8714c)"
+ahead         = "[ ${count} ](fg:#523335 bg:#d8712c)"
+behind        = "[ ${count} ](fg:black bg:#d8714c)"
+diverged      = "[ ](fg:90 bg:#d8712c)[ נּ ](fg:black bg:#d8712c)[ ${ahead_count} ](fg:black bg:#d8712c)[ ${behind_count} ](fg:black bg:#d8712c)"
