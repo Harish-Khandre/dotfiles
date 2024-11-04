@@ -40,7 +40,7 @@ success_symbol = "[❯](fg:prompt_ok)"
 error_symbol   = "[❯](fg:prompt_error)"
 
 [directory]
-format            = "[─](fg:separator)[](fg:folder_color)[pwd](fg:icon_color bg:folder_color)[](fg:folder_color bg:bg_color)[ $path](bg:bg_color)[](fg:bg_color)" 
+format            = "[─](fg:separator)[](fg:folder_color)[](fg:icon_color bg:folder_color)[](fg:folder_color bg:bg_color)[ $path](bg:bg_color)[](fg:bg_color)" 
 truncate_to_repo  = false
 truncation_length = 2
 

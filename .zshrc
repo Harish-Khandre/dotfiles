@@ -40,6 +40,15 @@ alias ff='nvim $(find . -type f \( -path "*/node_modules/*" -prune \) -o -type f
 alias fd='cd "$(find . -type d \( -name node_modules -prune \) -o -type d -print | fzf --preview="ls -al {}")" && nvim .'
 alias cat='batcat'
 
+# Alias to start MongoDB
+alias mongostart="sudo systemctl start mongod"
+
+# Alias to stop MongoDB
+alias mongostop="sudo systemctl stop mongod"
+
+# next.js check all 
+alias checkall="pnpm check-types && pnpm lint --fix && pnpm format"
+
 # Command substitutions
 if command -v eza &>/dev/null; then
   alias ls='eza --icons=always --color=auto --long'
