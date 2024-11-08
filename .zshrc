@@ -19,15 +19,16 @@ fi
 source ~/Git/zsh-snap/znap.zsh
 
 # Znap plugins
+# znap source marlonrichert/zsh-autocomplete
 znap source zsh-users/zsh-autosuggestions
 znap source zsh-users/zsh-syntax-highlighting
-znap source marlonrichert/zsh-autocomplete
+znap source zsh-users/zsh-completions
 znap source Aloxaf/fzf-tab
 znap source chrissicool/zsh-256color
 znap source MichaelAquilina/zsh-you-should-use
 
 # Oh My Zsh plugins
-plugins=(copyfile colored-man-pages docker copybuffer dirhistory git sudo vi-mode)
+plugins=(copyfile colored-man-pages docker copybuffer dirhistory git sudo vi-mode command-not-found)
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
@@ -55,9 +56,10 @@ if command -v eza &>/dev/null; then
 fi
 
 # autocompletions
-fpath=($fpath ~/.zsh/completion)
+fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 autoload bashcompinit && bashcompinit
 autoload -Uz compinit && compinit
+
 if command -v aws_completer &>/dev/null; then
   complete -C '$(which aws_completer)' aws
 fi
@@ -78,8 +80,7 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "/home/harish/.bun/_bun" ] && source "/home/harish/.bun/_bun"
 
-# Additional tools
-eval "$(zoxide init --cmd cd zsh)"
+# SST setup
 export PATH=$PATH:$HOME/.sst/bin
 
 # Fzf-tab styling
@@ -87,6 +88,7 @@ zstyle ':completion:*' menu no
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' list-colors '${(s.:.)LS_COLORS}'
 zstyle ':fzf-tab:complete:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # History settings
 HISTSIZE=5000
@@ -101,7 +103,11 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
-# Bindings and completion
-autoload -U compinit && compinit
-bindkey '^I' autosuggest-accept
+# Bindings 
+bindkey '^ ' autosuggest-accept
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+
+# Additional tools
+eval "$(zoxide init --cmd cd zsh)"
 eval "$(atuin init zsh)"
