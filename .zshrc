@@ -48,7 +48,7 @@ alias mongostart="sudo systemctl start mongod"
 alias mongostop="sudo systemctl stop mongod"
 
 # next.js check all 
-alias checkall="pnpm check-types && pnpm lint --fix && pnpm format"
+alias checkall="bun tsc && bun lint --fix && bun format"
 
 # Command substitutions
 if command -v eza &>/dev/null; then
@@ -111,3 +111,4 @@ bindkey '^n' history-search-forward
 # Additional tools
 eval "$(zoxide init --cmd cd zsh)"
 eval "$(atuin init zsh)"
+eval "$(direnv hook zsh)"
