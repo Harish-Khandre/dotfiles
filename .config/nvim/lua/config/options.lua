@@ -3,3 +3,4 @@
 -- Add any additional options here
 vim.opt.wrap = true
 vim.opt.scrolloff = 10
+vim.g.snacks_animate = false
